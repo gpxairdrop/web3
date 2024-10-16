@@ -1,6 +1,7 @@
 import { createAppKit } from '@reown/appkit'
 import { EthersAdapter } from '@reown/appkit-adapter-ethers'
 import { defineChain } from '@reown/appkit/networks';
+
 // Define the custom network
 const customNetwork = defineChain({
   id: 11155111,
