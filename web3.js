@@ -1,32 +1,45 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.1/web3.min.js"></script>
-<script>
-/* To connect using MetaMask */
-async function connect() {
- if (window.ethereum) {
-import { createAppKit } from '@reown/appkit/react'
+import { createAppKit } from '@reown/appkit'
 import { EthersAdapter } from '@reown/appkit-adapter-ethers'
-import { arbitrum, mainnet } from '@reown/appkit/networks'
+import { defineChain } from '@reown/appkit/networks';
+// Define the custom network
+const customNetwork = defineChain({
+  id: 11155111,
+  caipNetworkId: 'eip155:11155111',
+  chainNamespace: 'eip155',
+  name: 'Ethereum Testnet Sepolia',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Sepolia',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://rpc.sepolia.org'],
+      webSocket: ['wss://sepolia.drpc.org'],
+    },
+  },
+  blockExplorers: {
+    default: { name: 'etherscan-sepolia', url: 'https://sepolia.etherscan.io' },
+  }
 
-// 1. Get projectId
-const projectId = 'fd4d93557f7fb9680d03266b1f45a117';
+// 1. Get projectId from https://cloud.reown.com
+const projectId = 'YOUR_PROJECT_ID'
 
-// 2. Set the networks
-const networks = [arbitrum, mainnet];
-
-// 3. Create a metadata object - optional
+// 2. Create your application's metadata object
 const metadata = {
-  name: 'web3 givpn',
+  name: 'AppKit',
   description: 'AppKit Example',
-  url: 'https://gpxairdrop.github.io/web3', // origin must match your domain & subdomain
-  icons: ['https://assets.reown.com/reown-profile-pic.png']
+  url: 'https://reown.com/appkit', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-// 4. Create a AppKit instance
-createAppKit({
-  adapters: [new ethersAdapter()],
-  networks,
+// 3. Create a AppKit instance
+const modal = createAppKit({
+  adapters: [new EthersAdapter()],
+  networks: [mainnet, arbitrum],
   metadata,
   projectId,
   features: {
     analytics: true // Optional - defaults to your Cloud configuration
   }
+})
