@@ -13,7 +13,7 @@ const networks = [arbitrum, mainnet];
 const metadata = {
   name: 'web3 givpn',
   description: 'AppKit Example',
-  url: 'https://reown.com/appkit', // origin must match your domain & subdomain
+  url: 'https://gpxairdrop.github.io/web3', // origin must match your domain & subdomain
   icons: ['https://assets.reown.com/reown-profile-pic.png']
 }
 
