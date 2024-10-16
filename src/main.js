@@ -1,27 +1,6 @@
 import { createAppKit } from '@reown/appkit'
 import { EthersAdapter } from '@reown/appkit-adapter-ethers'
-import { defineChain } from '@reown/appkit/networks';
-
-// Define the custom network
-const customNetwork = defineChain({
-  id: 11155111,
-  caipNetworkId: 'eip155:11155111',
-  chainNamespace: 'eip155',
-  name: 'Ethereum Testnet Sepolia',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'Sepolia',
-    symbol: 'ETH',
-  },
-  rpcUrls: {
-    default: {
-      http: ['https://rpc.sepolia.org'],
-      webSocket: ['wss://sepolia.drpc.org'],
-    },
-  },
-  blockExplorers: {
-    default: { name: 'etherscan-sepolia', url: 'https://sepolia.etherscan.io' },
-  }
+import { mainnet, arbitrum } from '@reown/appkit/networks'
 
 // 1. Get projectId from https://cloud.reown.com
 const projectId = 'fd4d93557f7fb9680d03266b1f45a117'
