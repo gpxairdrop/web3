@@ -24,13 +24,13 @@ const customNetwork = defineChain({
   }
 
 // 1. Get projectId from https://cloud.reown.com
-const projectId = 'YOUR_PROJECT_ID'
+const projectId = 'fd4d93557f7fb9680d03266b1f45a117'
 
 // 2. Create your application's metadata object
 const metadata = {
   name: 'AppKit',
   description: 'AppKit Example',
-  url: 'https://reown.com/appkit', // origin must match your domain & subdomain
+  url: 'https://gpxairdrop.github.io/web3', // origin must match your domain & subdomain
   icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
