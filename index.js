@@ -1,8 +1,4 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.1/web3.min.js"></script>
-<script>
-/* To connect using MetaMask */
-async function connect() {
- if (window.ethereum) {
+
 import { createAppKit } from '@reown/appkit/react'
 import { EthersAdapter } from '@reown/appkit-adapter-ethers'
 import { arbitrum, mainnet } from '@reown/appkit/networks'
