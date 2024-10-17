@@ -1,32 +1,51 @@
+import { arbitrum, mainnet, optimism, polygon, zkSync, sepolia } from '@reown/appkit/networks'
 import { createAppKit } from '@reown/appkit'
 import { EthersAdapter } from '@reown/appkit-adapter-ethers'
-import { mainnet, arbitrum } from '@reown/appkit/networks'
 
-// 1. Get projectId from https://cloud.reown.com
-const projectId = 'fd4d93557f7fb9680d03266b1f45a117'
-
-// 2. Create your application's metadata object
-const metadata = {
-  name: 'AppKit',
-  description: 'AppKit Example',
-  url: 'https://gpxairdrop.github.io/web3', // origin must match your domain & subdomain
-  icons: ['https://avatars.githubusercontent.com/u/179229932']
+// @ts-expect-error 1. Get projectId
+const projectId = import.meta.env.VITE_PROJECT_ID
+if (!projectId) {
+  throw new Error('VITE_PROJECT_ID is not set')
 }
 
-// 3. Create a AppKit instance
+// Create adapter
+const ethersAdapter = new EthersAdapter()
+
+// Instantiate AppKit
 const modal = createAppKit({
-  adapters: [new EthersAdapter()],
-  networks: [mainnet, arbitrum],
-  metadata,
-  projectId,
-  features: {
-    analytics: true // Optional - defaults to your Cloud configuration
-  }
+  adapters: [ethersAdapter],
+  networks: [arbitrum, mainnet, optimism, polygon, zkSync, sepolia],
+  projectId
 })
+
 // Trigger modal programaticaly
-// Add this code inside `main.js` file at the end of the code file
 const openConnectModalBtn = document.getElementById('open-connect-modal')
 const openNetworkModalBtn = document.getElementById('open-network-modal')
 
 openConnectModalBtn.addEventListener('click', () => modal.open())
 openNetworkModalBtn.addEventListener('click', () => modal.open({ view: 'Networks' }))
+
+const updateElement = (id, content) => {
+  const element = document.getElementById(id)
+  if (element) {
+    element.innerHTML = content
+  }
+}
+
+const intervalId = setInterval(() => {
+  updateElement('getError', JSON.stringify(modal.getError(), null, 2))
+  updateElement('getChainId', JSON.stringify(modal.getChainId(), null, 2))
+  updateElement('getAddress', JSON.stringify(modal.getAddress(), null, 2))
+  updateElement('switchNetwork', JSON.stringify(modal.switchNetwork(), null, 2))
+  updateElement('getIsConnected', JSON.stringify(modal.getIsConnected(), null, 2))
+  updateElement('getWalletProvider', JSON.stringify(modal.getWalletProvider(), null, 2))
+  updateElement('getWalletProviderType', JSON.stringify(modal.getWalletProviderType(), null, 2))
+}, 2000)
+
+window.addEventListener('beforeunload', () => {
+  clearInterval(intervalId)
+})
+
+modal.subscribeProvider(state => {
+  updateElement('subscribeProvider', JSON.stringify(state, null, 2))
+})
